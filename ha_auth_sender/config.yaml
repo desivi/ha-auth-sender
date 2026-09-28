@@ -1,6 +1,6 @@
 ---
 name: HA Auth Sender
-version: "1.0.1"
+version: "1.0.2"
 slug: ha_auth_sender
 description: >-
   Forwards Home Assistant authentication events to a remote syslog receiver
@@ -14,6 +14,7 @@ startup: services
 boot: auto
 init: false
 hassio_api: true
+hassio_role: manager
 homeassistant_api: false
 host_network: false
 ingress: false
@@ -24,7 +25,7 @@ options:
   poll_interval: "20"
   app_name: ha-auth
   log_host: homeassistant
-  bootstrap: skip
+  bootstrap: sa
 schema:
   syslog_host: str
   syslog_port: port

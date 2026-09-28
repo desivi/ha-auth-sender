@@ -1,2 +1,17 @@
 #!/usr/bin/with-contenv bashio
+# Supervisor only injects options as env vars for legacy add-ons, so map them
+# explicitly. Each value falls back to the default ha_auth_sender.py uses, so an
+# empty bashio::config result cannot abort startup at int(os.environ[...]) .
+SYSLOG_HOST="$(bashio::config 'syslog_host')"
+SYSLOG_PORT="$(bashio::config 'syslog_port')"
+POLL_INTERVAL="$(bashio::config 'poll_interval')"
+APP_NAME="$(bashio::config 'app_name')"
+LOG_HOST="$(bashio::config 'log_host')"
+BOOTSTRAP_MODE="$(bashio::config 'bootstrap')"
+export SYSLOG_HOST="${SYSLOG_HOST:-192.168.0.20}"
+export SYSLOG_PORT="${SYSLOG_PORT:-1514}"
+export POLL_INTERVAL="${POLL_INTERVAL:-20}"
+export APP_NAME="${APP_NAME:-ha-auth}"
+export LOG_HOST="${LOG_HOST:-homeassistant}"
+export BOOTSTRAP_MODE="${BOOTSTRAP_MODE:-skip}"
 exec python3 /opt/ha_auth_sender/ha_auth_sender.py

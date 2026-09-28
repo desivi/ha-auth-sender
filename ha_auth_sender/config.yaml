@@ -5,7 +5,7 @@ slug: ha_auth_sender
 description: >-
   Forwards Home Assistant authentication events to a remote syslog receiver
   over RFC3164/UDP, with credential redaction and content-hash deduplication.
-url: https://github.com/desivi/ha-auth-sender-addon
+url: https://github.com/desivi/ha-auth-sender
 arch:
   - aarch64
   - amd64

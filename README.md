@@ -25,7 +25,7 @@ event=login_failed component=homeassistant.components.http.ban src_ip=203.0.113.
 **Settings -> Add-ons -> Add-on Store -> menu -> Repositories**, add:
 
 ```
-https://github.com/desivi/ha-auth-sender-addon
+https://github.com/desivi/ha-auth-sender
 ```
 
 Then install **HA Auth Sender**, set the destination host in Configuration, start.

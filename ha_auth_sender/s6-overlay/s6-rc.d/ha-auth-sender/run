@@ -1,0 +1,2 @@
+#!/usr/bin/with-contenv bashio
+exec python3 /opt/ha_auth_sender/ha_auth_sender.py

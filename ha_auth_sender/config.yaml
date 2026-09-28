@@ -1,6 +1,6 @@
 ---
 name: HA Auth Sender
-version: "1.0.0"
+version: "1.0.1"
 slug: ha_auth_sender
 description: >-
   Forwards Home Assistant authentication events to a remote syslog receiver

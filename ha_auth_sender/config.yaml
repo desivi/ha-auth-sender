@@ -1,10 +1,11 @@
 ---
 name: HA Auth Sender
-version: "1.0.2"
+version: "1.1.0"
 slug: ha_auth_sender
 description: >-
   Forwards Home Assistant authentication events to a remote syslog receiver
   over RFC3164/UDP, with credential redaction and content-hash deduplication.
+  Optionally also posts Alertmanager alerts and detects per-IP login bursts.
 url: https://github.com/desivi/ha-auth-sender
 arch:
   - aarch64
@@ -25,14 +26,36 @@ options:
   poll_interval: "20"
   app_name: ha-auth
   log_host: homeassistant
-  bootstrap: sa
+  bootstrap: skip
+  alertmanager_url: ""
+  alertmanager_token_file: ""
+  alertmanager_token: ""
+  instance: homeassistant
+  spray_threshold: "10"
+  spray_window_minutes: "10"
+  event_rate_limit_seconds: "60"
+  spray_rate_limit_seconds: "300"
+  max_tracked_ips: "2048"
+  ip_ttl_hours: "24"
 schema:
   syslog_host: str
   syslog_port: port
   poll_interval: "int(5,30)"
   app_name: str
   log_host: str
-  bootstrap: list(sa|send)
+  # "sa" was the shipped default in 1.0.2 and is accepted for backward
+  # compatibility; it is a typo for "skip" and always behaved as skip.
+  bootstrap: list(skip|send|sa)
+  alertmanager_url: str?
+  alertmanager_token_file: str?
+  alertmanager_token: password?
+  instance: str
+  spray_threshold: "int(1,1000)"
+  spray_window_minutes: "int(1,1440)"
+  event_rate_limit_seconds: "int(0,3600)"
+  spray_rate_limit_seconds: "int(0,3600)"
+  max_tracked_ips: "int(16,65536)"
+  ip_ttl_hours: "int(1,168)"
 ports:
   8099/tcp: null
 ports_description:

@@ -600,6 +600,8 @@ def poll(state: dict, tracker: "IpTracker", limiter: "RateLimiter") -> tuple[int
     except (urllib.error.URLError, OSError) as err:
         print(f"poll failed: {err}", flush=True)
         return (0, 0)
+    # Only a poll that actually read the log may mark the add-on healthy.
+    HealthHandler.last_success = time.time()
 
     seen = list(state["seen"])
     known = set(seen)
@@ -720,7 +722,6 @@ def main() -> int:
         sent, skipped = poll(state, tracker, limiter)
         if sent or skipped:
             print(f"poll: sent={sent} skipped={skipped}", flush=True)
-        HealthHandler.last_success = time.time()
         stopping.wait(POLL_INTERVAL)
 
     if server is not None:
